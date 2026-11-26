@@ -23,6 +23,7 @@
         "description": "Diese Fernbedienung hat {anzahl} Tasten.",
         "menu_options": {
           "anlernen": "Taste anlernen",
+          "code_eingeben": "NEC-Code eingeben",
           "umbenennen": "Taste umbenennen",
           "loeschen": "Tasten löschen"
         }
@@ -46,6 +47,15 @@
         "data": {
           "tasten": "Zu löschende Tasten"
         }
+      },
+      "code_eingeben": {
+        "title": "NEC-Code eingeben",
+        "description": "Taste aus einem bekannten NEC-Code anlegen – ohne Original-Fernbedienung. Werte hexadezimal: 8 Bit (z. B. Adresse `00`, Befehl `40`, das invertierte Byte wird ergänzt) oder 16 Bit wie in ESPHome (z. B. `FF00` / `BF40`).",
+        "data": {
+          "name": "Name der Taste",
+          "adresse": "Adresse (hex)",
+          "befehl": "Befehl (hex)"
+        }
       }
     },
     "progress": {
@@ -53,7 +63,8 @@
     },
     "error": {
       "name_leer": "Bitte einen Namen eingeben.",
-      "name_vergeben": "Diesen Namen gibt es schon."
+      "name_vergeben": "Diesen Namen gibt es schon.",
+      "code_ungueltig": "Ungültiger Hex-Wert (0–FFFF)."
     },
     "abort": {
       "kein_signal": "Kein IR-Signal empfangen. Fernbedienung näher an den Empfänger halten und erneut versuchen.",

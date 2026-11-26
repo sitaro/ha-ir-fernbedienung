@@ -23,6 +23,7 @@
         "description": "This remote has {anzahl} buttons.",
         "menu_options": {
           "anlernen": "Learn button",
+          "code_eingeben": "Enter NEC code",
           "umbenennen": "Rename button",
           "loeschen": "Delete buttons"
         }
@@ -46,6 +47,15 @@
         "data": {
           "tasten": "Buttons to delete"
         }
+      },
+      "code_eingeben": {
+        "title": "Enter NEC code",
+        "description": "Create a button from a known NEC code, without the original remote. Values in hex: 8-bit (e.g. address `00`, command `40`, the inverted byte is added) or 16-bit as in ESPHome (e.g. `FF00` / `BF40`).",
+        "data": {
+          "name": "Button name",
+          "adresse": "Address (hex)",
+          "befehl": "Command (hex)"
+        }
       }
     },
     "progress": {
@@ -53,7 +63,8 @@
     },
     "error": {
       "name_leer": "Please enter a name.",
-      "name_vergeben": "This name already exists."
+      "name_vergeben": "This name already exists.",
+      "code_ungueltig": "Invalid hex value (0–FFFF)."
     },
     "abort": {
       "kein_signal": "No IR signal received. Hold the remote closer to the receiver and try again.",

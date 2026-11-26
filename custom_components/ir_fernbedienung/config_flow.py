@@ -48,6 +48,7 @@ from .const import (
     MIN_TIMINGS,
     STANDARD_TRAEGER,
 )
+from .command import nec_timings
 
 
 class IrFernbedienungConfigFlow(ConfigFlow, domain=DOMAIN):
@@ -124,7 +125,7 @@ class TastenOptionsFlow(OptionsFlow):
 
     async def async_step_init(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
         """Menü."""
-        optionen = ["anlernen"]
+        optionen = ["anlernen", "code_eingeben"]
         if self._tasten:
             optionen += ["umbenennen", "loeschen"]
         return self.async_show_menu(
@@ -205,6 +206,47 @@ class TastenOptionsFlow(OptionsFlow):
     async def async_step_kein_signal(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
         """Zeitüberschreitung."""
         return self.async_abort(reason="kein_signal")
+
+    # ---------- Code eingeben ----------
+    async def async_step_code_eingeben(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
+        """Taste aus bekanntem NEC-Code anlegen (ohne Original-Fernbedienung)."""
+        errors: dict[str, str] = {}
+        if user_input is not None:
+            name = user_input[CONF_TASTE_NAME].strip()
+            werte: dict[str, int] = {}
+            for feld in ("adresse", "befehl"):
+                try:
+                    werte[feld] = int(user_input[feld].strip().lower().removeprefix("0x"), 16)
+                    if not 0 <= werte[feld] <= 0xFFFF:
+                        raise ValueError
+                except ValueError:
+                    errors[feld] = "code_ungueltig"
+            if not name:
+                errors[CONF_TASTE_NAME] = "name_leer"
+            elif any(t[CONF_TASTE_NAME].casefold() == name.casefold() for t in self._tasten.values()):
+                errors[CONF_TASTE_NAME] = "name_vergeben"
+            if not errors:
+                tasten = self._tasten
+                tasten[uuid.uuid4().hex[:8]] = {
+                    CONF_TASTE_NAME: name,
+                    CONF_TIMINGS: nec_timings(werte["adresse"], werte["befehl"]),
+                    CONF_TRAEGER: STANDARD_TRAEGER,
+                }
+                return self._speichern(tasten)
+        return self.async_show_form(
+            step_id="code_eingeben",
+            data_schema=self.add_suggested_values_to_schema(
+                vol.Schema(
+                    {
+                        vol.Required(CONF_TASTE_NAME): TextSelector(),
+                        vol.Required("adresse"): TextSelector(),
+                        vol.Required("befehl"): TextSelector(),
+                    }
+                ),
+                user_input or {},
+            ),
+            errors=errors,
+        )
 
     # ---------- Umbenennen ----------
     async def async_step_umbenennen(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:

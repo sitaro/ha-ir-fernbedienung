@@ -3,6 +3,7 @@
 Eigene Infrarot-Fernbedienungen **anlernen** und wieder **senden** – mit jedem IR-Empfänger und -Sender, den Home Assistant als `infrared`-Entität kennt (z. B. ESPHome mit `ir_rf_proxy`).
 
 - Anlernen direkt in der HA-Oberfläche: Taste benennen → Taste auf der Fernbedienung drücken → fertig.
+- Fernbedienung verloren? Tasten lassen sich auch aus einem bekannten **NEC-Code** (Adresse + Befehl) anlegen.
 - Jede Taste wird ein **Knopf** (`button.<fernbedienung>_<taste>`).
 - Zusätzlich eine **Remote-Entität** für Skripte: `remote.send_command` mit dem Tastennamen.
 - Gespeichert wird das Rohsignal (µs-Zeiten + Trägerfrequenz) – funktioniert also auch mit Protokollen, die HA nicht kennt.
@@ -43,7 +44,8 @@ infrared:
 
 1. *Einstellungen → Geräte & Dienste → Integration hinzufügen → IR-Fernbedienung*: Name, IR-Sender und IR-Empfänger wählen.
 2. Beim Eintrag auf **Konfigurieren** → **Taste anlernen** → Namen eingeben → **Senden** → innerhalb von 20 s die Taste auf der Fernbedienung kurz drücken (auf den Empfänger zielen).
-3. Ebenso: **Taste umbenennen**, **Tasten löschen**.
+3. Ohne Original-Fernbedienung: **NEC-Code eingeben** → Name, Adresse und Befehl (hex) eingeben. 8-Bit-Werte (z. B. `00` / `40`) werden um das invertierte Byte ergänzt, 16-Bit-Werte wie in ESPHome (`FF00` / `BF40`) bleiben unverändert.
+4. Ebenso: **Taste umbenennen**, **Tasten löschen**.
 
 Senden aus Automationen/Skripten:
 
