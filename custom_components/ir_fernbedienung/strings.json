@@ -1,0 +1,63 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "New IR remote",
+        "description": "Choose the IR emitter used to send the buttons and the IR receiver used for learning.",
+        "data": {
+          "name": "Remote name",
+          "sender": "IR emitter",
+          "empfaenger": "IR receiver"
+        }
+      }
+    },
+    "abort": {
+      "kein_sender": "No IR emitter (infrared entity) found. Set up e.g. ESPHome with `infrared: platform: ir_rf_proxy` first.",
+      "kein_empfaenger": "No IR receiver (infrared entity) found."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Manage buttons",
+        "description": "This remote has {anzahl} buttons.",
+        "menu_options": {
+          "anlernen": "Learn button",
+          "umbenennen": "Rename button",
+          "loeschen": "Delete buttons"
+        }
+      },
+      "anlernen": {
+        "title": "Learn button",
+        "description": "Enter the button name, click **Submit**, then **briefly** press the button on the remote, pointed at the IR receiver.",
+        "data": {
+          "name": "Button name"
+        }
+      },
+      "umbenennen": {
+        "title": "Rename button",
+        "data": {
+          "taste": "Button",
+          "name": "New name"
+        }
+      },
+      "loeschen": {
+        "title": "Delete buttons",
+        "data": {
+          "tasten": "Buttons to delete"
+        }
+      }
+    },
+    "progress": {
+      "warten": "Now press “{name}” on the remote … (waiting {sekunden} seconds)"
+    },
+    "error": {
+      "name_leer": "Please enter a name.",
+      "name_vergeben": "This name already exists."
+    },
+    "abort": {
+      "kein_signal": "No IR signal received. Hold the remote closer to the receiver and try again.",
+      "empfaenger_fehlt": "The IR receiver is not available."
+    }
+  }
+}

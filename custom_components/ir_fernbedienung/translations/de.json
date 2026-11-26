@@ -1,0 +1,63 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Neue IR-Fernbedienung",
+        "description": "Wähle den IR-Sender, über den die Tasten gesendet werden, und den IR-Empfänger zum Anlernen.",
+        "data": {
+          "name": "Name der Fernbedienung",
+          "sender": "IR-Sender",
+          "empfaenger": "IR-Empfänger"
+        }
+      }
+    },
+    "abort": {
+      "kein_sender": "Kein IR-Sender (infrared-Entität) gefunden. Richte zuerst z. B. ESPHome mit `infrared: platform: ir_rf_proxy` ein.",
+      "kein_empfaenger": "Kein IR-Empfänger (infrared-Entität) gefunden."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Tasten verwalten",
+        "description": "Diese Fernbedienung hat {anzahl} Tasten.",
+        "menu_options": {
+          "anlernen": "Taste anlernen",
+          "umbenennen": "Taste umbenennen",
+          "loeschen": "Tasten löschen"
+        }
+      },
+      "anlernen": {
+        "title": "Taste anlernen",
+        "description": "Name der Taste eingeben, auf **Senden** klicken und dann die Taste auf der Fernbedienung **kurz** drücken – Fernbedienung auf den IR-Empfänger richten.",
+        "data": {
+          "name": "Name der Taste"
+        }
+      },
+      "umbenennen": {
+        "title": "Taste umbenennen",
+        "data": {
+          "taste": "Taste",
+          "name": "Neuer Name"
+        }
+      },
+      "loeschen": {
+        "title": "Tasten löschen",
+        "data": {
+          "tasten": "Zu löschende Tasten"
+        }
+      }
+    },
+    "progress": {
+      "warten": "Jetzt die Taste „{name}“ auf der Fernbedienung drücken … (wartet {sekunden} Sekunden)"
+    },
+    "error": {
+      "name_leer": "Bitte einen Namen eingeben.",
+      "name_vergeben": "Diesen Namen gibt es schon."
+    },
+    "abort": {
+      "kein_signal": "Kein IR-Signal empfangen. Fernbedienung näher an den Empfänger halten und erneut versuchen.",
+      "empfaenger_fehlt": "Der IR-Empfänger ist nicht verfügbar."
+    }
+  }
+}
